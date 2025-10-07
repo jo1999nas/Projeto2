@@ -1,0 +1,72 @@
+services:
+  # Serviço PHP (Nossa aplicação)
+  app:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: laravel_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - laravel
+
+  # Servidor Web Nginx
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+    container_name: laravel_nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  # Banco de Dados PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: laravel_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    networks:
+      - laravel
+
+  # Serviço de Cache Redis
+  redis:
+    image: redis:7-alpine
+    container_name: laravel_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redisdata:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - laravel
+
+# Redes e Volumes
+networks:
+  laravel:
+    driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
+  redisdata:
+    driver: local
