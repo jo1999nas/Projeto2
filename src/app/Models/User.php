@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -64,4 +65,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Cada usuário tem uma conta
+    public function account(): HasOne
+    {
+        return $this->hasOne(Account::class);
+    }
+
 }
