@@ -30,8 +30,8 @@ Route::post('/{account:name}/follow', [FollowController::class, 'store'])->name(
 Route::delete('/{account:name}/unfollow', [FollowController::class, 'destroy'])->name('accounts.unfollow')->middleware('auth');
 
 // Listas de seguidores/seguindo
-Route::get('/{account:name}/followers', [AccountController::class, 'followers'])->name('accounts.followers')->middleware('auth');
-Route::get('/{account:name}/following', [AccountController::class, 'following'])->name('accounts.following')->middleware('auth');
+Route::get('/{account:name}/followers', [AccountController::class, 'followers'])->name('accounts.followers');
+Route::get('/{account:name}/following', [AccountController::class, 'following'])->name('accounts.following');
 
 // Rotas para postagens
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
@@ -42,7 +42,7 @@ Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.upda
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
 
 // Rota do feed de postagens
-Route::get('/', [FeedController::class, 'index'])->name('feed.index');
+//Route::get('/', [FeedController::class, 'index'])->name('feed.index');
 
 // Rota para salvar um novo comentário em um post específico
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
