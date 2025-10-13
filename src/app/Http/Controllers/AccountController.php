@@ -15,6 +15,7 @@ class AccountController extends Controller
         }]);
         // 2. Retornar a view do perfil
         return view('accounts.show', ['account' => $account]);
+        // return $account;
     }
     
     public function followers(Account $account)
@@ -23,6 +24,7 @@ class AccountController extends Controller
         $account->load('user', 'followers')->paginate(10);
         // 2. Retornar a view que lista os seguidores
         return view('accounts.followers', ['account' => $account]);
+        // return $account;
     }
 
     public function following(Account $account)
@@ -31,5 +33,6 @@ class AccountController extends Controller
         $account->load('user', 'following')->paginate(10);
         // 2. Retornar a view que lista os usuários
         return view('accounts.following', ['account' => $account]);
+        // return $account;
     }
 }

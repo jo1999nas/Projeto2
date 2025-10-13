@@ -12,7 +12,9 @@
 
             {{-- Informações adicionais como autor e data --}}
             <p class="post-info">
-                Postado por <strong>{{ $post->account->user->name }}</strong> em {{ $post->created_at->format('d/m/Y') }}
+                <!-- Postado por <strong>{{ $post->account->user->name }}</strong> em {{ $post->created_at->format('d/m/Y') }} -->
+                {{-- Se quiser linkar para o perfil, use uma rota válida, por exemplo: --}}
+                Postado por <strong><a href="/{{ $post->account->name }}">{{ $post->account->user->name }}</a></strong> em {{ $post->created_at->format('d/m/Y') }}
             </p>
 
             {{-- Corpo do post. Usamos !! !! para renderizar HTML, se houver. Cuidado com XSS. --}}

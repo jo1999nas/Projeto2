@@ -10,7 +10,7 @@ class FeedController extends Controller
     public function index()
     {
         $posts = Post::with('account.user')->latest()->paginate(10);
-        // return view('index', ['posts' => $posts]);
-        return $posts;
+        return view('index', ['posts' => $posts]);
+        // return $posts;
     }
 }
