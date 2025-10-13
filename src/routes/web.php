@@ -8,9 +8,9 @@ use App\Http\Controllers\FeedController;
 use App\Http\Controllers\CommentController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -42,7 +42,7 @@ Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.upda
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
 
 // Rota do feed de postagens
-//Route::get('/', [FeedController::class, 'index'])->name('feed.index');
+Route::get('/', [FeedController::class, 'index'])->name('feed.index');
 
 // Rota para salvar um novo comentário em um post específico
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');

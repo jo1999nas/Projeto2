@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class FeedController extends Controller
 {
     public function index()
     {
-        // 1. Buscar os posts para o feed
-        // 2. Retornar a view do feed com os posts
+        $posts = Post::with('account.user')->latest()->paginate(10);
+        // return view('index', ['posts' => $posts]);
+        return $posts;
     }
 }
