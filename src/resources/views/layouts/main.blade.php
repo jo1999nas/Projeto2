@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@yield('title')</title>
-        <link rel="stylesheet" href="/css/style.css">
+        <!-- <link rel="stylesheet" href="/css/style.css"> -->
     </head>
     <body>
         <header>
@@ -12,7 +12,7 @@
             <nav>
                 <a href="/">Início</a>
                 @auth
-                <a href="#">Teste</a>
+                <a href="{{ route('posts.create') }}">Criar novo post</a>
                 <a href="#">Teste</a>
                 <form action="/logout" method="POST" style="display:inline;">
                     @csrf

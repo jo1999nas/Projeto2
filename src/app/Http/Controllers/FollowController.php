@@ -17,7 +17,7 @@ class FollowController extends Controller
         $follower->following()->attach($account->id);
 
         // Redireciona de volta com uma mensagem de sucesso
-        return back()->with('success', 'Você agora está seguindo ' . $account->name);
+        return back();
     }
 
     public function destroy(Account $account): RedirectResponse
@@ -29,6 +29,6 @@ class FollowController extends Controller
         $follower->following()->detach($account->id);
 
         // Redireciona de volta com uma mensagem de sucesso
-        return back()->with('success', 'Você deixou de seguir ' . $account->name);
+        return back();
     }
 }
