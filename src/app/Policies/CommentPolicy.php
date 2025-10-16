@@ -45,7 +45,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        return $user->$account->id === $comment->account_id;
+        return $user->account->id === $comment->account_id;
     }
 
     /**

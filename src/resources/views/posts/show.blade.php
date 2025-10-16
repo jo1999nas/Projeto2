@@ -41,10 +41,21 @@
         @foreach ($post->comments as $comment)
             <div class="comment">
                 <p class="comment-body">{{ $comment->comment }}</p>
-                <p class="comment-info"><strong><a href="#">{{ $comment->account->user->name }}</a></strong> em {{ $comment->created_at->format('d/m/Y H:i') }}</p>
+                <p class="comment-info">
+                    <strong><a href="#">{{ $comment->account->user->name }}</a></strong>
+                    em {{ $comment->created_at->format('d/m/Y H:i') }}
+                </p>
             </div>
+            @auth
+                @if (auth()->user()->account->id === $comment->account_id)
+                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Excluir comentário</button>
+                    </form>
+                @endif
+            @endauth
         @endforeach
-
     @else
     <div>
         <p class="alert">Seja o primeiro a comentar!</p>
