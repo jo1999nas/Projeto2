@@ -8,7 +8,7 @@
 
 <form action="{{ route('posts.store') }}" method="POST">
     @csrf
-    <div class="caixa-posts">
+    <div class="caixa-posts-create">
         <label for="body">Conteúdo:</label>
         <textarea name="body" id="body" placeholder="Escreva seu post aqui..."></textarea>
         <button type="submit">Publicar</button>

@@ -43,11 +43,18 @@
 
     <h2 class="profile-posts-title">Posts</h2>
 
+    
     @forelse ($account->posts as $post)
-        <div class="post">
-            <p class="post-body">{{ $post->body }}</p>
-            <small class="post-info">Postado em: {{ $post->created_at->diffForHumans() }}</small>
-        </div>
+        <ul class="posts-list">
+            <li class="post-item">
+                <div class="post">
+                    <p class="post-body">{{ $post->body }}</p>
+                    <a href="/posts/{{ $post->id }}" class="read-more">Leia mais...</a>
+                    <small class="post-info">Postado em: {{ $post->created_at->diffForHumans() }}</small>                    
+                </div>
+            </li>
+        </ul>
+   
     @empty
         <div class="no-posts">
             <p class="alert">Este usuário ainda não fez nenhum post.</p>

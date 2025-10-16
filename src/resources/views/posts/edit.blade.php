@@ -9,7 +9,7 @@
 <form action="{{ route('posts.update', $post) }}" method="POST">
     @csrf
     @method('PUT')
-    <div class="caixa-posts">
+    <div class="caixa-posts-edit">
         <label for="body">Conteúdo:</label>
         <textarea name="body" id="body" placeholder="Escreva seu post aqui...">{{ $post->body }}</textarea>
         <button type="submit">Publicar</button>
