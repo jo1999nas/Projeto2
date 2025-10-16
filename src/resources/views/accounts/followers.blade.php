@@ -1,9 +1,17 @@
 @extends('layouts.main')
 
-@section('title', 'Página Inicial')
+@section('title', 'Seguidores de ' . $account->name)
 
 @section('content')
 
-<h1>Imagina que tá funcionando</h1>
+<h1>Seguidores de {{ $account->name }}</h1>
+
+<ul class="followers-list">
+    @foreach ($account->followers as $follower)
+        <li class="follower-item">
+            <a href="{{ route('account.show', $follower->name) }}">{{ $follower->name }}</a>
+        </li>
+    @endforeach
+</ul>
 
 @endsection

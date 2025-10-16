@@ -8,13 +8,13 @@
     <div class="post">
         <p class="post-body">{{ $post->body }}</p>
         <p class="post-info">
-            Postado por <strong><a href="/{{ $post->account->name }}">{{ $post->account->user->name }}</a></strong> em {{ $post->created_at->format('d/m/Y') }}
+            <small>Postado por <strong><a href="/{{ $post->account->name }}">{{ $post->account->user->name }}</a></strong> 
+            em {{ $post->created_at->format('d/m/Y') }}</small>
         </p>
     </div>
 
     @auth
         @if (auth()->user()->account->id === $post->account_id)
-
             <form action="{{ route('posts.edit', $post) }}" method="GET" style="display:inline;">
                 <button type="submit" class="btn btn-secondary">Editar post</button>
             </form>
@@ -38,26 +38,31 @@
     </form>
 
     @if($post->comments->isNotEmpty())
+
+    <ul class="comments-list">
         @foreach ($post->comments as $comment)
-            <div class="comment">
-                <p class="comment-body">{{ $comment->comment }}</p>
-                <p class="comment-info">
-                    <strong><a href="#">{{ $comment->account->user->name }}</a></strong>
-                    em {{ $comment->created_at->format('d/m/Y H:i') }}
-                </p>
-            </div>
-            @auth
-                @if (auth()->user()->account->id === $comment->account_id)
-                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Excluir comentário</button>
-                    </form>
-                @endif
-            @endauth
+            <li>
+                <div class="comment">
+                    <p class="comment-body">{{ $comment->comment }}</p>
+                    <p class="comment-info">
+                        <small><strong><a href="#">{{ $comment->account->user->name }}</a></strong>
+                        em {{ $comment->created_at->format('d/m/Y H:i') }}</small>
+                    </p>
+                    @auth
+                    @if (auth()->user()->account->id === $comment->account_id)
+                        <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Excluir comentário</button>
+                        </form>
+                    @endif
+                @endauth
+                </div>
+            </li>
         @endforeach
+    </ul>
     @else
-    <div>
+    <div class="no-comments">
         <p class="alert">Seja o primeiro a comentar!</p>
     </div>
     @endif

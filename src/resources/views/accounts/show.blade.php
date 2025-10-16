@@ -5,15 +5,15 @@
 @section('content')
 
 <body>
-    <h1>Perfil de: {{ $account->name }}</h1>
-    <p>
+    <h1 class="profile-title">Perfil de: {{ $account->name }}</h1>
+    <p class="profile-owner">
         <strong>{{ $account->user->name }}</strong>
     </p>
 
-    <div>
+    <div class="profile-stats">
         <span><strong>{{ $account->posts->count() }}</strong> posts</span> | 
-        <span><strong>{{ $account->followers->count() }}</strong> seguidores</span> | 
-        <span><strong>{{ $account->following->count() }}</strong> seguindo</span>
+        <span><strong>{{ $account->followers->count() }}</strong> <a href="{{ route('accounts.followers', $account->name) }}">seguidores</a></span> | 
+        <span><strong>{{ $account->following->count() }}</strong> <a href="{{ route('accounts.following', $account->name) }}">seguindo</a></span>
 
         {{-- Verifica se o usuário está logado e não está no próprio perfil --}}
         @if(auth()->check() && auth()->user()->account->id !== $account->id)
@@ -41,15 +41,17 @@
     
     <hr>
 
-    <h2>Posts</h2>
+    <h2 class="profile-posts-title">Posts</h2>
 
     @forelse ($account->posts as $post)
         <div class="post">
-            <p>{{ $post->body }}</p>
-            <small>Postado em: {{ $post->created_at->diffForHumans() }}</small>
+            <p class="post-body">{{ $post->body }}</p>
+            <small class="post-info">Postado em: {{ $post->created_at->diffForHumans() }}</small>
         </div>
     @empty
-        <p>Esta conta ainda não tem nenhum post.</p>
+        <div class="no-posts">
+            <p class="alert">Este usuário ainda não fez nenhum post.</p>
+        </div>
     @endforelse
 </body>
 
