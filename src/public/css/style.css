@@ -1,0 +1,265 @@
+/* ==========================================================================
+   1. CSS Reset & Base Styles
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-dark);
+}
+
+/* ==========================================================================
+   2. Variáveis CSS (Tema Escuro Moderno)
+   ========================================================================== */
+
+:root {
+  /* Cores */
+  --bg-dark: #1a202c;          /* Fundo principal (Azul escuro) */
+  --bg-surface: #2d3748;      /* Fundo de "cards" e elementos (Cinza escuro) */
+  --primary-color: #4299e1;     /* Cor de destaque (Azul vibrante) */
+  --text-primary: #e2e8f0;      /* Texto principal (Branco suave) */
+  --text-secondary: #a0aec0;    /* Texto secundário (Cinza claro) */
+  --border-color: #4a5568;      /* Cor da borda */
+  --danger-color: #e53e3e;       /* Vermelho para perigo/exclusão */
+  --secondary-color: #718096;   /* Cinza para botões secundários */
+
+  /* Medidas */
+  --container-width: 960px;
+  --border-radius: 8px;
+}
+
+/* ==========================================================================
+   3. Layout Principal (Header, Main Content, Footer)
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+header {
+  background-color: var(--bg-surface);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+header nav a {
+  color: var(--text-primary);
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+header nav a:hover {
+  color: var(--primary-color);
+}
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem 1rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   4. Estilos Gerais (Títulos, Links, Botões, Formulários)
+   ========================================================================== */
+
+h1, h2, h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* --- Botões --- */
+.btn {
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid transparent;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin: 0.25rem;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-primary:hover { background-color: #2b6cb0; border-color: #2b6cb0; }
+
+.btn-danger {
+  color: #fff;
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+.btn-danger:hover { background-color: #c53030; border-color: #c53030; }
+
+.btn-secondary {
+    color: #fff;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+.btn-secondary:hover { background-color: #4a5568; border-color: #4a5568; }
+
+
+/* --- Formulários --- */
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.caixa-posts-create button,
+.caixa-posts-edit button {
+    /* Utiliza as classes .btn já definidas */
+    composes: btn btn-primary;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* --- Alertas --- */
+.alert {
+    background-color: var(--bg-surface);
+    color: var(--text-secondary);
+    padding: 1rem;
+    border-left: 4px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+/* ==========================================================================
+   5. Estilos Específicos das Views
+   ========================================================================== */
+
+/* --- Perfil (showaccount.blade.php) --- */
+.profile-title {
+    margin-bottom: 0.25rem;
+}
+.profile-owner {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+.profile-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+.profile-stats span {
+    font-size: 1.1rem;
+}
+.profile-posts-title {
+    margin-top: 2rem;
+}
+
+
+/* --- Posts (Geral) --- */
+.posts-list, .comments-list {
+  list-style: none;
+  padding: 0;
+}
+.post, .comment {
+  background-color: var(--bg-surface);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+}
+.post-body, .comment-body {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.post-info, .comment-info {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+.post-info a, .comment-info a {
+    color: var(--text-secondary);
+    font-weight: bold;
+}
+.post-info a:hover, .comment-info a:hover {
+    color: var(--primary-color);
+}
+.read-more {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+/* --- Comentários (showpost.blade.php) --- */
+.comment-box {
+    margin: 1.5rem 0;
+}
+
+/* --- Listas de Seguidores/Seguindo --- */
+.followers-list, .following-list {
+    list-style: none;
+    padding: 0;
+}
+.follower-item, .following-item {
+    background-color: var(--bg-surface);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.5rem;
+}
+.back-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+}
