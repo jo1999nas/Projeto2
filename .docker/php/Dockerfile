@@ -4,7 +4,7 @@ ARG UID=1000
 ARG GID=1000
 
 # Dependências de runtime necessárias
-RUN apk add --no-cache git zip unzip postgresql-libs libzip
+RUN apk add --no-cache git zip unzip postgresql-libs libzip nodejs npm
 
 # Instalação de dependências de build, extensões nativas do PHP e limpeza das dependências de build
 RUN apk add --no-cache --virtual .build-deps \
