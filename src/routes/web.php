@@ -7,21 +7,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\CommentController;
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-
 // Perfil e posts do usuário
 Route::get('/{account:name}', [AccountController::class, 'show'])->name('account.show');
 

@@ -1,36 +1,33 @@
-# O ARQUIVO COMPLETO E CORRIGIDO
-# Usamos a imagem base do PHP 8.3 com FPM e Alpine para ser mais leve
 FROM php:8.3-fpm-alpine
 
-# Argumentos para o ID do usuário e do grupo, que virão do docker-compose
-ARG UID
-ARG GID
+ARG UID=1000
+ARG GID=1000
 
-# Instala dependências persistentes (RUNTIME)
+# Dependências de runtime necessárias
 RUN apk add --no-cache git zip unzip postgresql-libs libzip nodejs npm
 
-# Instala dependências de build, compila as extensões e remove as dependências de build
+# Instalação de dependências de build, extensões nativas do PHP e limpeza das dependências de build
 RUN apk add --no-cache --virtual .build-deps \
         build-base \
-        autoconf \
+        linux-headers \
         postgresql-dev \
         libzip-dev \
-        linux-headers \
-    && docker-php-ext-install -j$(nproc) pdo pdo_pgsql bcmath sockets \
-    && pecl install redis zip \
-    && docker-php-ext-enable redis zip \
+    && docker-php-ext-install -j$(nproc) pdo pdo_pgsql bcmath sockets zip \
     && apk del .build-deps
 
-# --- A SOLUÇÃO PARA PERMISSÕES ---
-# Cria um grupo e um usuário com os mesmos IDs do seu usuário do computador
+# Criação de grupo e usuário não-root com UID/GID correspondentes
 RUN addgroup -g $GID --system laravel && \
     adduser -u $UID -G laravel --system --shell /bin/sh laravel
 
-# Define o usuário 'laravel' como o padrão para todos os comandos
-USER laravel
-
-# Instala o Composer globalmente
+# Instala o Composer globalmente a partir da imagem oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Define o diretório de trabalho padrão
+# Copia e dá permissão ao script de entrypoint
+COPY .docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+USER laravel
 WORKDIR /var/www/html
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]
